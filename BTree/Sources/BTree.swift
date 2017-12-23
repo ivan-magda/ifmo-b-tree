@@ -25,5 +25,32 @@ import Foundation
 // MARK: - BTree<Key: Comparable, Value>
 
 class BTree<Key: Comparable, Value> {
-    
+
+    /**
+     *  The order of the B-Tree.
+     *
+     *  The number of keys in every node should be in the [order, 2 * order] range,
+     *  except the root node which is allowed to contain less keys than the value of order.
+     */
+    public let order: Int
+
+    private var rootNode: BTreeNode<Key, Value>!
+
+    private(set) public var numberOfKeys = 0
+
+    /**
+     *  Designated initializer for the tree
+     *
+     *  - Parameters:
+     *    - order: The order of the tree.
+     */
+    public init?(order: Int) {
+        guard order > 1 else {
+            print("Order has to be greater than 1.")
+            return nil
+        }
+
+        self.order = order
+        self.rootNode = BTreeNode<Key, Value>(owner: self)
+    }
 }
