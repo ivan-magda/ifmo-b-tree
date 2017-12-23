@@ -22,5 +22,10 @@
 
 import Foundation
 
-print("Hello, World!")
+let bTree = BTree<Int, Int>(order: 4)!
 
+let values = [8, 13, 5, 0, 16, 7, 23, 48, 15]
+for value in values {
+    bTree.insert(value, for: value)
+    print(bTree)
+}

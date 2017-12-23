@@ -90,6 +90,76 @@ extension BTreeNode {
     }
 }
 
+// MARK: - BTreeNode (Insertion)  -
+
+extension BTreeNode {
+
+    /**
+     *  Inserts `value` for `key` to the node
+     *
+     *  - Parameters:
+     *    - value: the value to be inserted for `key`
+     *    - key: the key for the `value`
+     */
+    func insert(_ value: Value, for key: Key) {
+        var index = keys.startIndex
+
+        while index < keys.endIndex && keys[index] < key {
+            index += 1
+        }
+
+        if index < keys.endIndex && keys[index] == key {
+            values[index] = value
+        } else if isLeaf {
+            keys.insert(key, at: index)
+            values.insert(value, at: index)
+            owner.numberOfKeys += 1
+        } else {
+            children![index].insert(value, for: key)
+
+            if children![index].isTooLarge {
+                split(child: children![index], atIndex: index)
+            }
+        }
+    }
+
+    /**
+     *  Splits `child` at `index`.
+     *  The key-value pair at `index` gets moved up to the parent node,
+     *  or if there is not an parent node, then a new parent node is created.
+     *
+     *  - Parameters:
+     *    - child: the child to be split
+     *    - index: the index of the key, which will be moved up to the parent
+     */
+    private func split(child: BTreeNode, atIndex index: Int) {
+        let middleIndex = child.numberOfKeys / 2
+
+        keys.insert(child.keys[middleIndex], at: index)
+        values.insert(child.values[middleIndex], at: index)
+
+        child.keys.remove(at: middleIndex)
+        child.values.remove(at: middleIndex)
+
+        let rightSibling = BTreeNode(
+                owner: owner,
+                keys: Array(child.keys[child.keys.indices.suffix(from: middleIndex)]),
+                values: Array(child.values[child.values.indices.suffix(from: middleIndex)])
+        )
+        child.keys.removeSubrange(child.keys.indices.suffix(from: middleIndex))
+        child.values.removeSubrange(child.values.indices.suffix(from: middleIndex))
+
+        children!.insert(rightSibling, at: (index + 1))
+
+        if child.children != nil {
+            rightSibling.children = Array(
+                    child.children![child.children!.indices.suffix(from: (middleIndex + 1))]
+            )
+            child.children!.removeSubrange(child.children!.indices.suffix(from: (middleIndex + 1)))
+        }
+    }
+}
+
 // MARK: - BTreeNode (CustomStringConvertible) -
 
 extension BTreeNode: CustomStringConvertible {

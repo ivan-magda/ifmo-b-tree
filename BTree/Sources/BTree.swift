@@ -33,17 +33,11 @@ class BTree<Key: Comparable, Value> {
 
     // MARK: Instance Variables
 
-    /**
-     *  The order of the B-Tree.
-     *
-     *  The number of keys in every node should be in the [order, 2 * order] range,
-     *  except the root node which is allowed to contain less keys than the value of order.
-     */
-    public let order: Int
+    let order: Int
 
     private var rootNode: BTreeNode<Key, Value>!
 
-    private(set) public var numberOfKeys = 0
+    var numberOfKeys = 0
 
     // MARK: Init
 
@@ -54,8 +48,8 @@ class BTree<Key: Comparable, Value> {
      *    - order: The order of the tree.
      */
     public init?(order: Int) {
-        guard order > 1 else {
-            print("Order has to be greater than 1.")
+        guard order > 0 else {
+            print("Order has to be greater than 0.")
             return nil
         }
 
@@ -74,7 +68,7 @@ extension BTree {
      *  - Parameters:
      *    - key: the key of the value to be returned
      */
-    public subscript(key: Key) -> Value? {
+    subscript(key: Key) -> Value? {
         return value(for: key)
     }
 
@@ -84,7 +78,7 @@ extension BTree {
      *  - Parameters:
      *    - key: the key of the value to be returned
      */
-    public func value(for key: Key) -> Value? {
+    func value(for key: Key) -> Value? {
         guard rootNode.numberOfKeys > 0 else {
             return nil
         }
@@ -92,6 +86,63 @@ extension BTree {
         return rootNode.value(for: key)
     }
 }
+
+// MARK: - BTree (Insertion) -
+
+extension BTree {
+
+    /**
+     *  Inserts the `value` for the `key` into the tree.
+     *
+     *  - Parameters:
+     *    - value: the value to be inserted for `key`
+     *    - key: the key for the `value`
+     */
+    func insert(_ value: Value, for key: Key) {
+        rootNode.insert(value, for: key)
+
+        if rootNode.isTooLarge {
+            splitRoot()
+        }
+    }
+
+    /**
+     *  Splits the root node of the tree.
+     */
+    private func splitRoot() {
+        let middleIndex = rootNode.numberOfKeys / 2
+
+        let newRoot = BTreeNode<Key, Value>(
+                owner: self,
+                keys: [rootNode.keys[middleIndex]],
+                values: [rootNode.values[middleIndex]],
+                children: [rootNode]
+        )
+        rootNode.keys.remove(at: middleIndex)
+        rootNode.values.remove(at: middleIndex)
+
+        let newRightChild = BTreeNode<Key, Value>(
+                owner: self,
+                keys: Array(rootNode.keys[rootNode.keys.indices.suffix(from: middleIndex)]),
+                values: Array(rootNode.values[rootNode.values.indices.suffix(from: middleIndex)])
+        )
+        rootNode.keys.removeSubrange(rootNode.keys.indices.suffix(from: middleIndex))
+        rootNode.values.removeSubrange(rootNode.values.indices.suffix(from: middleIndex))
+
+        if rootNode.children != nil {
+            newRightChild.children = Array(
+                    rootNode.children![rootNode.children!.indices.suffix(from: (middleIndex + 1))]
+            )
+            rootNode.children!.removeSubrange(
+                    rootNode.children!.indices.suffix(from: (middleIndex + 1))
+            )
+        }
+
+        newRoot.children!.append(newRightChild)
+        rootNode = newRoot
+    }
+}
+
 // MARK: - BTree (CustomStringConvertible) -
 
 extension BTree: CustomStringConvertible {

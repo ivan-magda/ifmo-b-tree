@@ -79,10 +79,10 @@
 		751508A61FED09FC00C0F3FA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7EFB6F04B28C31F8B46E3213 /* Utility */,
 				75E13FB01FEE6E08006BE01D /* BTreeNode.swift */,
 				75E13FB31FEE6E9E006BE01D /* BTree.swift */,
 				751508A71FED09FC00C0F3FA /* main.swift */,
-				7EFB6F04B28C31F8B46E3213 /* Utility */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
