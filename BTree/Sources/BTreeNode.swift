@@ -35,6 +35,14 @@ class BTreeNode<Key: Comparable, Value> {
     private var values = [Value]()
     private var children: [BTreeNode]?
     
+    var isLeaf: Bool {
+        return children == nil
+    }
+    
+    var numberOfKeys: Int {
+        return keys.count
+    }
+    
     init(owner: BTree<Key, Value>) {
         self.owner = owner
     }
