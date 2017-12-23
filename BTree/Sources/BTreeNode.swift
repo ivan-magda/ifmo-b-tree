@@ -81,3 +81,19 @@ extension BTreeNode {
         }
     }
 }
+
+// MARK: - BTreeNode (CustomStringConvertible) -
+
+extension BTreeNode: CustomStringConvertible {
+    var description: String {
+        var str = "\(keys)"
+
+        if !isLeaf {
+            for child in children! {
+                str += child.description
+            }
+        }
+
+        return str
+    }
+}

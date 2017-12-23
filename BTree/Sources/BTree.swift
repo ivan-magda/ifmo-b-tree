@@ -92,3 +92,10 @@ extension BTree {
         return rootNode.value(for: key)
     }
 }
+// MARK: - BTree (CustomStringConvertible) -
+
+extension BTree: CustomStringConvertible {
+    public var description: String {
+        return rootNode.description
+    }
+}
