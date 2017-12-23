@@ -26,4 +26,24 @@ import Foundation
 
 class BTreeNode<Key: Comparable, Value> {
     
+    /**
+     * The tree that owns the node.
+     */
+    unowned var owner: BTree<Key, Value>
+    
+    private var keys = [Key]()
+    private var values = [Value]()
+    private var children: [BTreeNode]?
+    
+    init(owner: BTree<Key, Value>) {
+        self.owner = owner
+    }
+    
+    convenience init(owner: BTree<Key, Value>, keys: [Key], values: [Value],
+                     children: [BTreeNode]? = nil) {
+        self.init(owner: owner)
+        self.keys += keys
+        self.values += values
+        self.children = children
+    }
 }
