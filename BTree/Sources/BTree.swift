@@ -24,7 +24,14 @@ import Foundation
 
 // MARK: - BTree<Key: Comparable, Value>
 
+/**
+ *  B-Tree
+ *
+ *  A B-Tree is a self-balancing search tree, in which nodes can have more than two children.
+ */
 class BTree<Key: Comparable, Value> {
+
+    // MARK: Instance Variables
 
     /**
      *  The order of the B-Tree.
@@ -37,6 +44,8 @@ class BTree<Key: Comparable, Value> {
     private var rootNode: BTreeNode<Key, Value>!
 
     private(set) public var numberOfKeys = 0
+
+    // MARK: Init
 
     /**
      *  Designated initializer for the tree
@@ -52,5 +61,34 @@ class BTree<Key: Comparable, Value> {
 
         self.order = order
         self.rootNode = BTreeNode<Key, Value>(owner: self)
+    }
+}
+
+// MARK: - BTree (Search) -
+
+extension BTree {
+
+    /**
+     *  Returns the value for a given `key`, returns nil if the `key` is not found.
+     *
+     *  - Parameters:
+     *    - key: the key of the value to be returned
+     */
+    public subscript(key: Key) -> Value? {
+        return value(for: key)
+    }
+
+    /**
+     *  Returns the value for a given `key`, returns nil if the `key` is not found.
+     *
+     *  - Parameters:
+     *    - key: the key of the value to be returned
+     */
+    public func value(for key: Key) -> Value? {
+        guard rootNode.numberOfKeys > 0 else {
+            return nil
+        }
+
+        return rootNode.value(for: key)
     }
 }
