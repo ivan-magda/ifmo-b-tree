@@ -76,7 +76,7 @@ extension BTreeNode {
     func value(for key: Key) -> Value? {
         var index = keys.startIndex
 
-        while index < keys.count && key > keys[index] {
+        while (index + 1) < keys.endIndex && key > keys[index] {
             index += 1
         }
 
