@@ -25,33 +25,59 @@ import Foundation
 // MARK: - BTreeNode<Key: Comparable, Value>
 
 class BTreeNode<Key: Comparable, Value> {
-    
+
     /**
      * The tree that owns the node.
      */
     unowned var owner: BTree<Key, Value>
-    
+
     private var keys = [Key]()
     private var values = [Value]()
     private var children: [BTreeNode]?
-    
+
     var isLeaf: Bool {
         return children == nil
     }
-    
+
     var numberOfKeys: Int {
         return keys.count
     }
-    
+
     init(owner: BTree<Key, Value>) {
         self.owner = owner
     }
-    
-    convenience init(owner: BTree<Key, Value>, keys: [Key], values: [Value],
-                     children: [BTreeNode]? = nil) {
+
+    convenience init(owner: BTree<Key, Value>, keys: [Key], values: [Value], children: [BTreeNode]? = nil) {
         self.init(owner: owner)
         self.keys += keys
         self.values += values
         self.children = children
+    }
+}
+
+// MARK: BTreeNode (Search)
+
+extension BTreeNode {
+
+    /**
+     *  Returns the value for a given `key`, otherwise returns nil if the `key` is not found.
+     *
+     *  - Parameters:
+     *    - key: the key of the value to be returned
+     */
+    func value(for key: Key) -> Value? {
+        var index = keys.startIndex
+
+        while index < keys.count && key > keys[index] {
+            index += 1
+        }
+
+        if key == keys[index] {
+            return values[index]
+        } else if key < keys[index] {
+            return children?[index].value(for: key)
+        } else {
+            return children?[(index + 1)].value(for: key)
+        }
     }
 }
