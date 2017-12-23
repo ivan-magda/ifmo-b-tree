@@ -11,6 +11,8 @@
 		75A6BDEA1FED160B00D07B86 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A6BDE91FED160B00D07B86 /* Tests.swift */; };
 		75E13FB11FEE6E08006BE01D /* BTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E13FB01FEE6E08006BE01D /* BTreeNode.swift */; };
 		75E13FB21FEE6E08006BE01D /* BTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E13FB01FEE6E08006BE01D /* BTreeNode.swift */; };
+		75E13FB41FEE6E9E006BE01D /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E13FB31FEE6E9E006BE01D /* BTree.swift */; };
+		75E13FB51FEE6E9E006BE01D /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E13FB31FEE6E9E006BE01D /* BTree.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +34,7 @@
 		75A6BDE91FED160B00D07B86 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		75A6BDEB1FED160B00D07B86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75E13FB01FEE6E08006BE01D /* BTreeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTreeNode.swift; sourceTree = "<group>"; };
+		75E13FB31FEE6E9E006BE01D /* BTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTree.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				75E13FB01FEE6E08006BE01D /* BTreeNode.swift */,
+				75E13FB31FEE6E9E006BE01D /* BTree.swift */,
 				751508A71FED09FC00C0F3FA /* main.swift */,
 			);
 			path = Sources;
@@ -180,6 +184,7 @@
 			files = (
 				75E13FB11FEE6E08006BE01D /* BTreeNode.swift in Sources */,
 				751508A81FED09FC00C0F3FA /* main.swift in Sources */,
+				75E13FB41FEE6E9E006BE01D /* BTree.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +194,7 @@
 			files = (
 				75E13FB21FEE6E08006BE01D /* BTreeNode.swift in Sources */,
 				75A6BDEA1FED160B00D07B86 /* Tests.swift in Sources */,
+				75E13FB51FEE6E9E006BE01D /* BTree.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
