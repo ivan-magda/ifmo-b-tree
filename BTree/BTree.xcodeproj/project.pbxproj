@@ -13,6 +13,8 @@
 		75E13FB21FEE6E08006BE01D /* BTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E13FB01FEE6E08006BE01D /* BTreeNode.swift */; };
 		75E13FB41FEE6E9E006BE01D /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E13FB31FEE6E9E006BE01D /* BTree.swift */; };
 		75E13FB51FEE6E9E006BE01D /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E13FB31FEE6E9E006BE01D /* BTree.swift */; };
+		7EFB628B9E5E499CDDBDD489 /* BTree+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFB6D06169A9F557B304FD1 /* BTree+Cache.swift */; };
+		7EFB699049EE64B51D65BC7A /* BTree+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFB6D06169A9F557B304FD1 /* BTree+Cache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +37,7 @@
 		75A6BDEB1FED160B00D07B86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75E13FB01FEE6E08006BE01D /* BTreeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTreeNode.swift; sourceTree = "<group>"; };
 		75E13FB31FEE6E9E006BE01D /* BTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTree.swift; sourceTree = "<group>"; };
+		7EFB6D06169A9F557B304FD1 /* BTree+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BTree+Cache.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +82,7 @@
 				75E13FB01FEE6E08006BE01D /* BTreeNode.swift */,
 				75E13FB31FEE6E9E006BE01D /* BTree.swift */,
 				751508A71FED09FC00C0F3FA /* main.swift */,
+				7EFB6F04B28C31F8B46E3213 /* Utility */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -90,6 +94,14 @@
 				75A6BDEB1FED160B00D07B86 /* Info.plist */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		7EFB6F04B28C31F8B46E3213 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				7EFB6D06169A9F557B304FD1 /* BTree+Cache.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,6 +197,7 @@
 				75E13FB11FEE6E08006BE01D /* BTreeNode.swift in Sources */,
 				751508A81FED09FC00C0F3FA /* main.swift in Sources */,
 				75E13FB41FEE6E9E006BE01D /* BTree.swift in Sources */,
+				7EFB699049EE64B51D65BC7A /* BTree+Cache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +208,7 @@
 				75E13FB21FEE6E08006BE01D /* BTreeNode.swift in Sources */,
 				75A6BDEA1FED160B00D07B86 /* Tests.swift in Sources */,
 				75E13FB51FEE6E9E006BE01D /* BTree.swift in Sources */,
+				7EFB628B9E5E499CDDBDD489 /* BTree+Cache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
