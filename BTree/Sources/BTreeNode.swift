@@ -31,13 +31,9 @@ class BTreeNode<Key: Comparable, Value> {
      */
     unowned var owner: BTree<Key, Value>
 
-    private var keys = [Key]()
-    private var values = [Value]()
-    private var children: [BTreeNode]?
-
-    var isLeaf: Bool {
-        return children == nil
-    }
+    var keys = [Key]()
+    var values = [Value]()
+    var children: [BTreeNode]?
 
     var numberOfKeys: Int {
         return keys.count
