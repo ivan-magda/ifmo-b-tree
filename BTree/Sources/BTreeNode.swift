@@ -55,6 +55,18 @@ class BTreeNode<Key: Comparable, Value> {
     }
 }
 
+// MARK: - BTreeNode (Basic limits and properties) -
+
+extension BTreeNode {
+    var isLeaf: Bool {
+        return children == nil || children!.isEmpty
+    }
+
+    var isTooLarge: Bool {
+        return keys.count >= owner.order
+    }
+}
+
 // MARK: BTreeNode (Search)
 
 extension BTreeNode {
