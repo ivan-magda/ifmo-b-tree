@@ -49,6 +49,12 @@ class BTreeTests: XCTestCase {
         XCTAssertEqual(bTree.numberOfKeys, 0)
     }
 
+    func testInorderTraversalOfEmptyTree() {
+        bTree.traverseKeysInOrder { _ in
+            XCTFail("Inorder travelsal fail.")
+        }
+    }
+    
     func testSubscriptOnEmptyTree() {
         XCTAssertEqual(bTree[1], nil)
     }
@@ -65,6 +71,20 @@ class BTreeTests: XCTestCase {
         bTree.insert(1, for: 1)
 
         XCTAssertEqual(bTree[1]!, 1)
+    }
+    
+    func testRemoveFromEmptyTree() {
+        bTree.remove(1)
+        XCTAssertEqual(bTree.description, "[]")
+    }
+    
+    func testInorderArrayFromEmptyTree() {
+        var arr = [Int]()
+        bTree.traverseKeysInOrder {
+            arr.append($0)
+        }
+        
+        XCTAssertEqual(arr, [Int]())
     }
 
     // MARK: - Deletion
