@@ -120,6 +120,25 @@ class BTreeTests: XCTestCase {
         XCTAssertEqual(bTree.value(for: 1)!, 1)
     }
     
+    // MARK: - Insertion
+    
+    func testInsertion() {
+        let upperBound = 100
+        bTree.insertKeysUpTo(upperBound)
+        
+        XCTAssertEqual(bTree.numberOfKeys, upperBound)
+        
+        for i in 1...upperBound {
+            XCTAssertNotNil(bTree[i])
+        }
+        
+        do {
+            try bTree.checkBalance()
+        } catch {
+            XCTFail("BTree is not balanced")
+        }
+    }
+    
     // MARK: - Deletion
 
     func testRemoveMaximum() {
