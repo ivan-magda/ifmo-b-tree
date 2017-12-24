@@ -86,6 +86,21 @@ class BTreeTests: XCTestCase {
         
         XCTAssertEqual(arr, [Int]())
     }
+    
+    // MARK: - Travers
+    
+    func testInorderTravelsal() {
+        for i in 1...100 {
+            bTree.insert(i, for: i)
+        }
+        
+        var j = 1
+        
+        bTree.traverseKeysInOrder { i in
+            XCTAssertEqual(i, j)
+            j += 1
+        }
+    }
 
     // MARK: - Deletion
 
