@@ -22,28 +22,46 @@
 
 import XCTest
 
-class Tests: XCTestCase {
-    
+class BTreeNodeTests: XCTestCase {
+
+    private let bTree = BTree<Int, Int>(order: 4)!
+    private var root: BTreeNode<Int, Int>!
+    private var leftChild: BTreeNode<Int, Int>!
+    private var rightChild: BTreeNode<Int, Int>!
+
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+
+        root = BTreeNode(owner: bTree)
+        leftChild = BTreeNode(owner: bTree)
+        rightChild = BTreeNode(owner: bTree)
+
+        root.insert(1, for: 1)
+        root.children = [leftChild, rightChild]
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+
+    func testIsLeafRoot() {
+        XCTAssertFalse(root.isLeaf)
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+
+    func testIsLeafLeaf() {
+        XCTAssertTrue(leftChild.isLeaf)
+        XCTAssertTrue(rightChild.isLeaf)
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+
+    func testOwner() {
+        XCTAssert(root.owner === bTree)
+        XCTAssert(leftChild.owner === bTree)
+        XCTAssert(rightChild.owner === bTree)
     }
-    
+
+    func testNumberOfKeys() {
+        XCTAssertEqual(root.numberOfKeys, 1)
+        XCTAssertEqual(leftChild.numberOfKeys, 0)
+        XCTAssertEqual(rightChild.numberOfKeys, 0)
+    }
+
+    func testChildren() {
+        XCTAssertEqual(root.children!.count, 2)
+    }
 }
