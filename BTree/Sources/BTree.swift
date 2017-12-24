@@ -44,12 +44,15 @@ class BTree<Key: Comparable, Value> {
     /**
      *  Designated initializer for the tree
      *
+     *  See BTreeNode's extension (Basic limits and properties) for more info
+     *  about min/max allowed keys/children.
+     *
      *  - Parameters:
      *    - order: The order of the tree.
      */
     public init?(order: Int) {
-        guard order > 0 else {
-            print("Order has to be greater than 0.")
+        guard order > 2 else {
+            print("Order has to be greater than 2.")
             return nil
         }
 
