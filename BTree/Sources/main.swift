@@ -46,7 +46,7 @@ func demoDeletion() {
     let bTree = Tree(order: 4)!
 
     let toInsert = Array(1...10)
-    let toDelete = [6]
+    let toDelete = [6, 1, 3]
 
     print("Keys to be inserted: \(toInsert)")
     print("Keys to be deleted: \(toDelete)")
@@ -65,7 +65,27 @@ func demoDeletion() {
         bTree.remove(keyToDelete)
         print(bTree)
     }
+
+    print("\n\n")
+}
+
+func traversDemo() {
+    print("Travers:")
+
+    let bTree = Tree(order: 4)!
+
+    for key in 1...20 {
+        bTree.insert(key, for: key)
+    }
+
+    var arr = [Int]()
+    bTree.traverseKeysInOrder {
+        arr.append($0)
+    }
+
+    print(arr)
 }
 
 demoInsertion()
 demoDeletion()
+traversDemo()
