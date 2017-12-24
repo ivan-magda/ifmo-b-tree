@@ -90,6 +90,21 @@ extension BTree {
     }
 }
 
+// MARK: - BTree (Travers) -
+
+extension BTree {
+
+    /**
+     *  Traverses the keys in order, executes `process` closure for every key.
+     *
+     *  - Parameters:
+     *    - process: the closure to be executed for every key
+     */
+    public func traverseKeysInOrder(_ process: (Key) -> Void) {
+        rootNode.traverseKeysInOrder(process)
+    }
+}
+
 // MARK: - BTree (Insertion) -
 
 extension BTree {
