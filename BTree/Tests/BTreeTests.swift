@@ -102,6 +102,24 @@ class BTreeTests: XCTestCase {
         }
     }
 
+    // MARK: - Search
+    
+    func testSearchForMaximum() {
+        for i in 1...20 {
+            bTree.insert(i, for: i)
+        }
+        
+        XCTAssertEqual(bTree.value(for: 20)!, 20)
+    }
+    
+    func testSearchForMinimum() {
+        for i in 1...20 {
+            bTree.insert(i, for: i)
+        }
+        
+        XCTAssertEqual(bTree.value(for: 1)!, 1)
+    }
+    
     // MARK: - Deletion
 
     func testRemoveMaximum() {
