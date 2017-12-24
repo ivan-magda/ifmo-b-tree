@@ -22,10 +22,23 @@
 
 import Foundation
 
-let bTree = BTree<Int, Int>(order: 4)!
+private typealias Tree = BTree<Int, Int>
 
-let values = [8, 13, 5, 0, 16, 7, 23, 48, 15]
-for value in values {
-    bTree.insert(value, for: value)
-    print(bTree)
+func demoInsertion() {
+    print("Insertion:")
+
+    let bTree = Tree(order: 4)!
+    let keys = [8, 13, 5, 0, 16, 7, 23, 48, 15]
+
+    print("Keys to be inserted: \(keys)\n")
+
+    for key in keys {
+        bTree.insert(key, for: key)
+        print(bTree)
+    }
+
+    print("\n\n")
 }
+
+
+demoInsertion()
