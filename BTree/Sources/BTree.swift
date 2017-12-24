@@ -146,6 +146,29 @@ extension BTree {
     }
 }
 
+// MARK: - BTree (Deletion) -
+
+extension BTree {
+
+    /**
+     *  Removes `key` and the value associated with it from the tree.
+     *
+     *  - Parameters:
+     *    - key: the key to remove
+     */
+    public func remove(_ key: Key) {
+        guard rootNode.numberOfKeys > 0 else {
+            return
+        }
+
+        rootNode.remove(key)
+
+        if rootNode.numberOfKeys == 0 && !rootNode.isLeaf {
+            rootNode = rootNode.children!.first!
+        }
+    }
+}
+
 // MARK: - BTree (CustomStringConvertible) -
 
 extension BTree: CustomStringConvertible {

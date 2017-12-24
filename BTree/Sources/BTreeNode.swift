@@ -185,6 +185,190 @@ extension BTreeNode {
     }
 }
 
+// MARK: - BTreeNode (Deletion) -
+
+/**
+ *  An enumeration to indicate a node's position according to another node.
+ *
+ *  Possible values:
+ *    - left
+ *    - right
+ */
+private enum BTreeNodePosition {
+    case left
+    case right
+}
+
+extension BTreeNode {
+
+    private var inorderPredecessor: BTreeNode {
+        if isLeaf {
+            return self
+        } else {
+            return children!.last!.inorderPredecessor
+        }
+    }
+
+    /**
+     *  Removes `key` and the value associated with it from the node
+     *  or one of its descendants.
+     *
+     *  - Parameters:
+     *    - key: the key to be removed
+     */
+    func remove(_ key: Key) {
+        var index = keys.startIndex
+
+        // Perform a search for the `key` we want to remove.
+        while (index + 1) < keys.endIndex && keys[index] < key {
+            index = (index + 1)
+        }
+
+        if keys[index] == key {
+            // If we have found the `key` and if we are on a leaf node,
+            // we can remove the key.
+            if isLeaf {
+                keys.remove(at: index)
+                values.remove(at: index)
+                owner.numberOfKeys -= 1
+            } else {
+                // We need to overwrite `key` with its inorder predecessor `p`,
+                // then we remove `p` from the leaf node.
+                let child = children![index]
+                let predecessor = child.inorderPredecessor
+
+                keys[index] = predecessor.keys.last!
+                values[index] = predecessor.values.last!
+                child.remove(keys[index])
+
+                if child.isTooSmall {
+                    fix(childWithTooFewKeys: children![index], atIndex: index)
+                }
+            }
+        } else if key < keys[index] {
+            if let leftChild = children?[index] {
+                leftChild.remove(key)
+
+                if leftChild.isTooSmall {
+                    fix(childWithTooFewKeys: leftChild, atIndex: index)
+                }
+            } else {
+                print("The key:\(key) is not in the tree.")
+            }
+        } else {
+            if let rightChild = children?[(index + 1)] {
+                rightChild.remove(key)
+
+                if rightChild.isTooSmall {
+                    fix(childWithTooFewKeys: rightChild, atIndex: (index + 1))
+                }
+            } else {
+                print("The key:\(key) is not in the tree")
+            }
+        }
+    }
+
+    /**
+     *  Fixes `childWithTooFewKeys` by either moving a key to it from
+     *  one of its neighbouring nodes, or by merging.
+     *
+     *  - Parameters:
+     *    - child: the child to be fixed
+     *    - index: the index of the child to be fixed in the current node
+     */
+    private func fix(childWithTooFewKeys child: BTreeNode, atIndex index: Int) {
+        if (index - 1) >= 0 && children![(index - 1)].numberOfKeys > minKeys {
+            move(keyAtIndex: (index - 1), to: child, from: children![(index - 1)], at: .left)
+        } else if (index + 1) < children!.count && children![(index + 1)].numberOfKeys > minKeys {
+            move(keyAtIndex: index, to: child, from: children![(index + 1)], at: .right)
+        } else if (index - 1) >= 0 {
+            merge(child: child, atIndex: index, to: .left)
+        } else {
+            merge(child: child, atIndex: index, to: .right)
+        }
+    }
+
+    /**
+     *  Moves the key at the specified `index` from `node` to
+     *  the `targetNode` at `position`
+     *
+     *  - Parameters:
+     *    - index: the index of the key to be moved in `node`
+     *    - targetNode: the node to move the key into
+     *    - node: the node to move the key from
+     *    - position: the position of the from node relative to the targetNode
+     */
+    private func move(keyAtIndex index: Int, to targetNode: BTreeNode,
+                      from node: BTreeNode, at position: BTreeNodePosition) {
+        switch position {
+        case .left:
+            targetNode.keys.insert(keys[index], at: targetNode.keys.startIndex)
+            targetNode.values.insert(values[index], at: targetNode.values.startIndex)
+
+            keys[index] = node.keys.last!
+            values[index] = node.values.last!
+
+            node.keys.removeLast()
+            node.values.removeLast()
+
+            if !targetNode.isLeaf {
+                targetNode.children!.insert(node.children!.last!, at: targetNode.children!.startIndex)
+                node.children!.removeLast()
+            }
+        case .right:
+            targetNode.keys.insert(keys[index], at: targetNode.keys.endIndex)
+            targetNode.values.insert(values[index], at: targetNode.values.endIndex)
+
+            keys[index] = node.keys.first!
+            values[index] = node.values.first!
+
+            node.keys.removeFirst()
+            node.values.removeFirst()
+
+            if !targetNode.isLeaf {
+                targetNode.children!.insert(node.children!.first!, at: targetNode.children!.endIndex)
+                node.children!.removeFirst()
+            }
+        }
+    }
+
+    /**
+     *  Merges `child` at `position` to the node at the `position`.
+     *
+     *  - Parameters:
+     *    - child: the child to be merged
+     *    - index: the index of the child in the current node
+     *    - position: the position of the node to merge into
+     */
+    private func merge(child: BTreeNode, atIndex index: Int, to position: BTreeNodePosition) {
+        // Merge to the left or right sibling.
+        switch position {
+        case .left:
+            children![(index - 1)].keys = children![(index - 1)].keys + [keys[(index - 1)]] + child.keys
+            children![(index - 1)].values = children![(index - 1)].values + [values[(index - 1)]] + child.values
+
+            keys.remove(at: (index - 1))
+            values.remove(at: (index - 1))
+
+            if !child.isLeaf {
+                children![(index - 1)].children = children![(index - 1)].children! + child.children!
+            }
+        case .right:
+            children![(index + 1)].keys = child.keys + [keys[index]] + children![(index + 1)].keys
+            children![(index + 1)].values = child.values + [values[index]] + children![(index + 1)].values
+
+            keys.remove(at: index)
+            values.remove(at: index)
+
+            if !child.isLeaf {
+                children![(index + 1)].children = child.children! + children![(index + 1)].children!
+            }
+        }
+
+        children!.remove(at: index)
+    }
+}
+
 // MARK: - BTreeNode (CustomStringConvertible) -
 
 extension BTreeNode: CustomStringConvertible {
