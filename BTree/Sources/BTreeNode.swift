@@ -54,12 +54,37 @@ class BTreeNode<Key: Comparable, Value> {
 // MARK: - BTreeNode (Basic limits and properties) -
 
 extension BTreeNode {
+
+    var maxChildren: Int {
+        return owner.order
+    }
+
+    var minChildren: Int {
+        return (maxChildren + 1) / 2
+    }
+
+    var maxKeys: Int {
+        return maxChildren - 1
+    }
+
+    var minKeys: Int {
+        return minChildren - 1
+    }
+
     var isLeaf: Bool {
         return children == nil || children!.isEmpty
     }
 
+    var isTooSmall: Bool {
+        return keys.count < minKeys
+    }
+
     var isTooLarge: Bool {
-        return keys.count >= owner.order
+        return keys.count > maxKeys
+    }
+
+    var isBalanced: Bool {
+        return keys.count >= minKeys && keys.count <= maxKeys
     }
 }
 
