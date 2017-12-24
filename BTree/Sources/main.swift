@@ -40,5 +40,32 @@ func demoInsertion() {
     print("\n\n")
 }
 
+func demoDeletion() {
+    print("Deletion:")
+
+    let bTree = Tree(order: 4)!
+
+    let toInsert = Array(1...10)
+    let toDelete = [6]
+
+    print("Keys to be inserted: \(toInsert)")
+    print("Keys to be deleted: \(toDelete)")
+
+    for key in toInsert {
+        bTree.insert(key, for: key)
+    }
+
+    print("Original tree: \(bTree)")
+
+    //        [3, 6, 9]
+    // [1, 2] [4, 5] [7, 8] [10]
+
+    for keyToDelete in toDelete {
+        print("Delete key: \(keyToDelete)")
+        bTree.remove(keyToDelete)
+        print(bTree)
+    }
+}
 
 demoInsertion()
+demoDeletion()
