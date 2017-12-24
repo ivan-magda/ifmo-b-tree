@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		751508A81FED09FC00C0F3FA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751508A71FED09FC00C0F3FA /* main.swift */; };
 		754948C41FEFB0D1007DC7E9 /* BTreeNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754948C31FEFB0D1007DC7E9 /* BTreeNodeTests.swift */; };
+		754948C81FEFBE11007DC7E9 /* BTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754948C71FEFBE11007DC7E9 /* BTreeTests.swift */; };
 		75E13FB11FEE6E08006BE01D /* BTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E13FB01FEE6E08006BE01D /* BTreeNode.swift */; };
 		75E13FB21FEE6E08006BE01D /* BTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E13FB01FEE6E08006BE01D /* BTreeNode.swift */; };
 		75E13FB41FEE6E9E006BE01D /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E13FB31FEE6E9E006BE01D /* BTree.swift */; };
@@ -33,6 +34,7 @@
 		751508A41FED09FC00C0F3FA /* BTree */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BTree; sourceTree = BUILT_PRODUCTS_DIR; };
 		751508A71FED09FC00C0F3FA /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		754948C31FEFB0D1007DC7E9 /* BTreeNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTreeNodeTests.swift; sourceTree = "<group>"; };
+		754948C71FEFBE11007DC7E9 /* BTreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTreeTests.swift; sourceTree = "<group>"; };
 		75A6BDE71FED160B00D07B86 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75A6BDEB1FED160B00D07B86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75E13FB01FEE6E08006BE01D /* BTreeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTreeNode.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				754948C31FEFB0D1007DC7E9 /* BTreeNodeTests.swift */,
+				754948C71FEFBE11007DC7E9 /* BTreeTests.swift */,
 				75A6BDEB1FED160B00D07B86 /* Info.plist */,
 			);
 			path = Tests;
@@ -209,6 +212,7 @@
 				754948C41FEFB0D1007DC7E9 /* BTreeNodeTests.swift in Sources */,
 				75E13FB51FEE6E9E006BE01D /* BTree.swift in Sources */,
 				7EFB628B9E5E499CDDBDD489 /* BTree+Cache.swift in Sources */,
+				754948C81FEFBE11007DC7E9 /* BTreeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

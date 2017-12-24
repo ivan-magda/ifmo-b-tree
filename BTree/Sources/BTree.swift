@@ -35,7 +35,7 @@ class BTree<Key: Comparable, Value> {
 
     let order: Int
 
-    private var rootNode: BTreeNode<Key, Value>!
+    var rootNode: BTreeNode<Key, Value>!
 
     var numberOfKeys = 0
 
