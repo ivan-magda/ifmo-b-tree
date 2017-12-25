@@ -227,6 +227,39 @@ class BTreeTests: XCTestCase {
 
         XCTAssertEqual(bTree.numberOfKeys, 0)
     }
+
+    // MARK: Stress Test
+
+    func testStress() {
+        func getRandom(_ array: [Int]) -> Int {
+            let randomIndex = Int(arc4random_uniform(UInt32(array.count)))
+            return array[randomIndex]
+        }
+
+        let orders = 16
+        let epochs = 10
+
+        for order in 3...orders {
+            for _ in 0..<epochs {
+                bTree = Tree(order: order)
+
+                let input = Array(0...1000).shuffled()
+                for (index, value) in input.enumerated() {
+                    bTree.insert(value, for: value)
+
+                    if index % 10 == 0 {
+                        bTree.remove(getRandom(bTree.inorderArrayFromKeys))
+                    }
+
+                    do {
+                        try bTree.checkBalance()
+                    } catch {
+                        XCTFail("BTree is not balanced")
+                    }
+                }
+            }
+        }
+    }
 }
 
 // MARK: - Node (checkBalance) -
