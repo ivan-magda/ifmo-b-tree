@@ -42,7 +42,7 @@ class BTreeTests: XCTestCase {
     }
 
     func testRootNode() {
-        XCTAssertNotNil(bTree.rootNode)
+        XCTAssertNotNil(bTree.root)
     }
 
     func testNumberOfNodesOnEmptyTree() {
@@ -261,6 +261,6 @@ extension BTree where Key: SignedInteger, Value: SignedInteger {
     }
 
     func checkBalance() throws {
-        try rootNode.checkBalance(isRoot: true)
+        try root.checkBalance(isRoot: true)
     }
 }

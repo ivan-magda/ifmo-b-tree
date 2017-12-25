@@ -35,7 +35,7 @@ class BTree<Key: Comparable, Value> {
 
     let order: Int
 
-    var rootNode: Node<Key, Value>!
+    var root: Node<Key, Value>!
 
     var numberOfKeys = 0
 
@@ -57,7 +57,7 @@ class BTree<Key: Comparable, Value> {
         }
 
         self.order = order
-        self.rootNode = Node<Key, Value>(owner: self)
+        self.root = Node<Key, Value>(owner: self)
     }
 }
 
@@ -82,11 +82,11 @@ extension BTree {
      *    - key: the key of the value to be returned
      */
     func value(for key: Key) -> Value? {
-        guard rootNode.numberOfKeys > 0 else {
+        guard root.numberOfKeys > 0 else {
             return nil
         }
 
-        return rootNode.value(for: key)
+        return root.value(for: key)
     }
 }
 
@@ -101,7 +101,7 @@ extension BTree {
      *    - process: the closure to be executed for every key
      */
     public func traverseKeysInOrder(_ process: (Key) -> Void) {
-        rootNode.traverseKeysInOrder(process)
+        root.traverseKeysInOrder(process)
     }
 }
 
@@ -117,9 +117,9 @@ extension BTree {
      *    - key: the key for the `value`
      */
     func insert(_ value: Value, for key: Key) {
-        rootNode.insert(value, for: key)
+        root.insert(value, for: key)
 
-        if rootNode.isTooLarge {
+        if root.isTooLarge {
             splitRoot()
         }
     }
@@ -128,36 +128,36 @@ extension BTree {
      *  Splits the root node of the tree.
      */
     private func splitRoot() {
-        let middleIndex = rootNode.numberOfKeys / 2
+        let middleIndex = root.numberOfKeys / 2
 
         let newRoot = Node<Key, Value>(
                 owner: self,
-                keys: [rootNode.keys[middleIndex]],
-                values: [rootNode.values[middleIndex]],
-                children: [rootNode]
+                keys: [root.keys[middleIndex]],
+                values: [root.values[middleIndex]],
+                children: [root]
         )
-        rootNode.keys.remove(at: middleIndex)
-        rootNode.values.remove(at: middleIndex)
+        root.keys.remove(at: middleIndex)
+        root.values.remove(at: middleIndex)
 
         let newRightChild = Node<Key, Value>(
                 owner: self,
-                keys: Array(rootNode.keys[rootNode.keys.indices.suffix(from: middleIndex)]),
-                values: Array(rootNode.values[rootNode.values.indices.suffix(from: middleIndex)])
+                keys: Array(root.keys[root.keys.indices.suffix(from: middleIndex)]),
+                values: Array(root.values[root.values.indices.suffix(from: middleIndex)])
         )
-        rootNode.keys.removeSubrange(rootNode.keys.indices.suffix(from: middleIndex))
-        rootNode.values.removeSubrange(rootNode.values.indices.suffix(from: middleIndex))
+        root.keys.removeSubrange(root.keys.indices.suffix(from: middleIndex))
+        root.values.removeSubrange(root.values.indices.suffix(from: middleIndex))
 
-        if rootNode.children != nil {
+        if root.children != nil {
             newRightChild.children = Array(
-                    rootNode.children![rootNode.children!.indices.suffix(from: (middleIndex + 1))]
+                    root.children![root.children!.indices.suffix(from: (middleIndex + 1))]
             )
-            rootNode.children!.removeSubrange(
-                    rootNode.children!.indices.suffix(from: (middleIndex + 1))
+            root.children!.removeSubrange(
+                    root.children!.indices.suffix(from: (middleIndex + 1))
             )
         }
 
         newRoot.children!.append(newRightChild)
-        rootNode = newRoot
+        root = newRoot
     }
 }
 
@@ -172,14 +172,14 @@ extension BTree {
      *    - key: the key to remove
      */
     public func remove(_ key: Key) {
-        guard rootNode.numberOfKeys > 0 else {
+        guard root.numberOfKeys > 0 else {
             return
         }
 
-        rootNode.remove(key)
+        root.remove(key)
 
-        if rootNode.numberOfKeys == 0 && !rootNode.isLeaf {
-            rootNode = rootNode.children!.first!
+        if root.numberOfKeys == 0 && !root.isLeaf {
+            root = root.children!.first!
         }
     }
 }
@@ -188,6 +188,6 @@ extension BTree {
 
 extension BTree: CustomStringConvertible {
     public var description: String {
-        return rootNode.description
+        return root.description
     }
 }
