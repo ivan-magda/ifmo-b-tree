@@ -54,7 +54,7 @@ class BTreeTests: XCTestCase {
             XCTFail("Inorder travelsal fail.")
         }
     }
-    
+
     func testSubscriptOnEmptyTree() {
         XCTAssertEqual(bTree[1], nil)
     }
@@ -72,73 +72,79 @@ class BTreeTests: XCTestCase {
 
         XCTAssertEqual(bTree[1]!, 1)
     }
-    
+
     func testRemoveFromEmptyTree() {
         bTree.remove(1)
         XCTAssertEqual(bTree.description, "[]")
     }
     
     func testInorderArrayFromEmptyTree() {
-        var arr = [Int]()
-        bTree.traverseKeysInOrder {
-            arr.append($0)
-        }
-        
-        XCTAssertEqual(arr, [Int]())
+        XCTAssertEqual(bTree.inorderArrayFromKeys, [Int]())
     }
-    
+
     // MARK: - Travers
-    
+
     func testInorderTravelsal() {
         for i in 1...100 {
             bTree.insert(i, for: i)
         }
-        
+
         var j = 1
-        
+
         bTree.traverseKeysInOrder { i in
             XCTAssertEqual(i, j)
             j += 1
         }
     }
+    
+    // MARK: - Conversion
+    
+    func testInorderArray() {
+        bTree.insertKeysUpTo(100)
+        
+        let returnedArray = bTree.inorderArrayFromKeys
+        let targetArray = Array<Int>(1...100)
+        
+        XCTAssertEqual(returnedArray, targetArray)
+    }
 
     // MARK: - Search
-    
+
     func testSearchForMaximum() {
         for i in 1...20 {
             bTree.insert(i, for: i)
         }
-        
+
         XCTAssertEqual(bTree.value(for: 20)!, 20)
     }
-    
+
     func testSearchForMinimum() {
         for i in 1...20 {
             bTree.insert(i, for: i)
         }
-        
+
         XCTAssertEqual(bTree.value(for: 1)!, 1)
     }
-    
+
     // MARK: - Insertion
-    
+
     func testInsertion() {
         let upperBound = 100
         bTree.insertKeysUpTo(upperBound)
-        
+
         XCTAssertEqual(bTree.numberOfKeys, upperBound)
-        
+
         for i in 1...upperBound {
             XCTAssertNotNil(bTree[i])
         }
-        
+
         do {
             try bTree.checkBalance()
         } catch {
             XCTFail("BTree is not balanced")
         }
     }
-    
+
     // MARK: - Deletion
 
     func testRemoveMaximum() {
