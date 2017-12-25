@@ -22,9 +22,9 @@
 
 import Foundation
 
-// MARK: - BTreeNode<Key: Comparable, Value>
+// MARK: - Node<Key: Comparable, Value>
 
-class BTreeNode<Key: Comparable, Value> {
+class Node<Key: Comparable, Value> {
 
     /**
      * The tree that owns the node.
@@ -33,7 +33,7 @@ class BTreeNode<Key: Comparable, Value> {
 
     var keys = [Key]()
     var values = [Value]()
-    var children: [BTreeNode]?
+    var children: [Node]?
 
     var numberOfKeys: Int {
         return keys.count
@@ -43,7 +43,7 @@ class BTreeNode<Key: Comparable, Value> {
         self.owner = owner
     }
 
-    convenience init(owner: BTree<Key, Value>, keys: [Key], values: [Value], children: [BTreeNode]? = nil) {
+    convenience init(owner: BTree<Key, Value>, keys: [Key], values: [Value], children: [Node]? = nil) {
         self.init(owner: owner)
         self.keys += keys
         self.values += values
@@ -51,9 +51,9 @@ class BTreeNode<Key: Comparable, Value> {
     }
 }
 
-// MARK: - BTreeNode (Basic limits and properties) -
+// MARK: - Node (Basic limits and properties) -
 
-extension BTreeNode {
+extension Node {
 
     var maxChildren: Int {
         return owner.order
@@ -88,9 +88,9 @@ extension BTreeNode {
     }
 }
 
-// MARK: BTreeNode (Search)
+// MARK: Node (Search)
 
-extension BTreeNode {
+extension Node {
 
     /**
      *  Returns the value for a given `key`, otherwise returns nil if the `key` is not found.
@@ -115,9 +115,9 @@ extension BTreeNode {
     }
 }
 
-// MARK: - BTreeNode (Travers) -
+// MARK: - Node (Travers) -
 
-extension BTreeNode {
+extension Node {
 
     /**
      *  Traverses the keys in order, executes `process` closure for every key.
@@ -135,9 +135,9 @@ extension BTreeNode {
     }
 }
 
-// MARK: - BTreeNode (Insertion)  -
+// MARK: - Node (Insertion)  -
 
-extension BTreeNode {
+extension Node {
 
     /**
      *  Inserts `value` for `key` to the node
@@ -177,7 +177,7 @@ extension BTreeNode {
      *    - child: the child to be split
      *    - index: the index of the key, which will be moved up to the parent
      */
-    private func split(child: BTreeNode, atIndex index: Int) {
+    private func split(child: Node, atIndex index: Int) {
         let middleIndex = child.numberOfKeys / 2
 
         keys.insert(child.keys[middleIndex], at: index)
@@ -186,7 +186,7 @@ extension BTreeNode {
         child.keys.remove(at: middleIndex)
         child.values.remove(at: middleIndex)
 
-        let rightSibling = BTreeNode(
+        let rightSibling = Node(
                 owner: owner,
                 keys: Array(child.keys[child.keys.indices.suffix(from: middleIndex)]),
                 values: Array(child.values[child.values.indices.suffix(from: middleIndex)])
@@ -205,7 +205,7 @@ extension BTreeNode {
     }
 }
 
-// MARK: - BTreeNode (Deletion) -
+// MARK: - Node (Deletion) -
 
 /**
  *  An enumeration to indicate a node's position according to another node.
@@ -219,9 +219,9 @@ private enum BTreeNodePosition {
     case right
 }
 
-extension BTreeNode {
+extension Node {
 
-    private var inorderPredecessor: BTreeNode {
+    private var inorderPredecessor: Node {
         if isLeaf {
             return self
         } else {
@@ -296,7 +296,7 @@ extension BTreeNode {
      *    - child: the child to be fixed
      *    - index: the index of the child to be fixed in the current node
      */
-    private func fix(childWithTooFewKeys child: BTreeNode, atIndex index: Int) {
+    private func fix(childWithTooFewKeys child: Node, atIndex index: Int) {
         if (index - 1) >= 0 && children![(index - 1)].numberOfKeys > minKeys {
             move(keyAtIndex: (index - 1), to: child, from: children![(index - 1)], at: .left)
         } else if (index + 1) < children!.count && children![(index + 1)].numberOfKeys > minKeys {
@@ -318,8 +318,8 @@ extension BTreeNode {
      *    - node: the node to move the key from
      *    - position: the position of the from node relative to the targetNode
      */
-    private func move(keyAtIndex index: Int, to targetNode: BTreeNode,
-                      from node: BTreeNode, at position: BTreeNodePosition) {
+    private func move(keyAtIndex index: Int, to targetNode: Node,
+                      from node: Node, at position: BTreeNodePosition) {
         switch position {
         case .left:
             targetNode.keys.insert(keys[index], at: targetNode.keys.startIndex)
@@ -360,7 +360,7 @@ extension BTreeNode {
      *    - index: the index of the child in the current node
      *    - position: the position of the node to merge into
      */
-    private func merge(child: BTreeNode, atIndex index: Int, to position: BTreeNodePosition) {
+    private func merge(child: Node, atIndex index: Int, to position: BTreeNodePosition) {
         // Merge to the left or right sibling.
         switch position {
         case .left:
@@ -389,9 +389,9 @@ extension BTreeNode {
     }
 }
 
-// MARK: - BTreeNode (CustomStringConvertible) -
+// MARK: - Node (CustomStringConvertible) -
 
-extension BTreeNode: CustomStringConvertible {
+extension Node: CustomStringConvertible {
     var description: String {
         var str = "\(keys)"
 

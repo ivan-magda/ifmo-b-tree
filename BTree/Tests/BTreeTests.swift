@@ -223,14 +223,14 @@ class BTreeTests: XCTestCase {
     }
 }
 
-// MARK: - BTreeNode (checkBalance) -
+// MARK: - Node (checkBalance) -
 
 enum BTreeError: Error {
     case tooManyNodes
     case tooFewNodes
 }
 
-extension BTreeNode {
+extension Node {
     func checkBalance(isRoot root: Bool) throws {
         if isTooLarge {
             throw BTreeError.tooManyNodes

@@ -23,13 +23,11 @@
 import XCTest
 
 class BTreeNodeTests: XCTestCase {
-    
-    typealias Node = BTreeNode<Int, Int>
 
     let bTree = BTree<Int, Int>(order: 4)!
-    var root: Node!
-    var leftChild: Node!
-    var rightChild: Node!
+    var root: Node<Int, Int>!
+    var leftChild: Node<Int, Int>!
+    var rightChild: Node<Int, Int>!
 
     override func setUp() {
         super.setUp()

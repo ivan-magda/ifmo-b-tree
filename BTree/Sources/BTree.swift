@@ -35,7 +35,7 @@ class BTree<Key: Comparable, Value> {
 
     let order: Int
 
-    var rootNode: BTreeNode<Key, Value>!
+    var rootNode: Node<Key, Value>!
 
     var numberOfKeys = 0
 
@@ -44,7 +44,7 @@ class BTree<Key: Comparable, Value> {
     /**
      *  Designated initializer for the tree
      *
-     *  See BTreeNode's extension (Basic limits and properties) for more info
+     *  See Node's extension (Basic limits and properties) for more info
      *  about min/max allowed keys/children.
      *
      *  - Parameters:
@@ -57,7 +57,7 @@ class BTree<Key: Comparable, Value> {
         }
 
         self.order = order
-        self.rootNode = BTreeNode<Key, Value>(owner: self)
+        self.rootNode = Node<Key, Value>(owner: self)
     }
 }
 
@@ -130,7 +130,7 @@ extension BTree {
     private func splitRoot() {
         let middleIndex = rootNode.numberOfKeys / 2
 
-        let newRoot = BTreeNode<Key, Value>(
+        let newRoot = Node<Key, Value>(
                 owner: self,
                 keys: [rootNode.keys[middleIndex]],
                 values: [rootNode.values[middleIndex]],
@@ -139,7 +139,7 @@ extension BTree {
         rootNode.keys.remove(at: middleIndex)
         rootNode.values.remove(at: middleIndex)
 
-        let newRightChild = BTreeNode<Key, Value>(
+        let newRightChild = Node<Key, Value>(
                 owner: self,
                 keys: Array(rootNode.keys[rootNode.keys.indices.suffix(from: middleIndex)]),
                 values: Array(rootNode.values[rootNode.values.indices.suffix(from: middleIndex)])
