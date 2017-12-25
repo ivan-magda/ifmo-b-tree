@@ -23,44 +23,44 @@
 import XCTest
 
 class BTreeNodeTests: XCTestCase {
-
+    
     let bTree = BTree<Int, Int>(order: 4)
     var root: Node<Int, Int>!
     var leftChild: Node<Int, Int>!
     var rightChild: Node<Int, Int>!
-
+    
     override func setUp() {
         super.setUp()
-
+        
         root = Node(owner: bTree)
         leftChild = Node(owner: bTree)
         rightChild = Node(owner: bTree)
-
+        
         root.insert(1, for: 1)
         root.children = [leftChild, rightChild]
     }
-
+    
     func testIsLeafRoot() {
         XCTAssertFalse(root.isLeaf)
     }
-
+    
     func testIsLeafLeaf() {
         XCTAssertTrue(leftChild.isLeaf)
         XCTAssertTrue(rightChild.isLeaf)
     }
-
+    
     func testOwner() {
         XCTAssert(root.owner === bTree)
         XCTAssert(leftChild.owner === bTree)
         XCTAssert(rightChild.owner === bTree)
     }
-
+    
     func testNumberOfKeys() {
         XCTAssertEqual(root.numberOfKeys, 1)
         XCTAssertEqual(leftChild.numberOfKeys, 0)
         XCTAssertEqual(rightChild.numberOfKeys, 0)
     }
-
+    
     func testChildren() {
         XCTAssertEqual(root.children!.count, 2)
     }

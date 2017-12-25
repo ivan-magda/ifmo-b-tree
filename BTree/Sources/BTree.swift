@@ -30,17 +30,17 @@ import Foundation
  *  A B-Tree is a self-balancing search tree, in which nodes can have more than two children.
  */
 class BTree<Key: Comparable, Value> {
-
+    
     // MARK: Instance Variables
-
+    
     let order: Int
-
+    
     var root: Node<Key, Value>!
-
+    
     var numberOfKeys = 0
-
+    
     // MARK: Init
-
+    
     /**
      *  Designated initializer for the tree
      *
@@ -52,7 +52,7 @@ class BTree<Key: Comparable, Value> {
      */
     public init(order: Int) {
         assert(order > 2, "Order has to be greater than 2.")
-
+        
         self.order = order
         self.root = Node<Key, Value>(owner: self)
     }
@@ -61,7 +61,7 @@ class BTree<Key: Comparable, Value> {
 // MARK: - BTree (Search) -
 
 extension BTree {
-
+    
     /**
      *  Returns the value for a given `key`, returns nil if the `key` is not found.
      *
@@ -71,7 +71,7 @@ extension BTree {
     subscript(key: Key) -> Value? {
         return value(for: key)
     }
-
+    
     /**
      *  Returns the value for a given `key`, returns nil if the `key` is not found.
      *
@@ -82,7 +82,7 @@ extension BTree {
         guard root.numberOfKeys > 0 else {
             return nil
         }
-
+        
         return root.value(for: key)
     }
 }
@@ -90,7 +90,7 @@ extension BTree {
 // MARK: - BTree (Travers) -
 
 extension BTree {
-
+    
     /**
      *  Traverses the keys in order, executes `process` closure for every key.
      *
@@ -105,7 +105,7 @@ extension BTree {
 // MARK: - BTree (Insertion) -
 
 extension BTree {
-
+    
     /**
      *  Inserts the `value` for the `key` into the tree.
      *
@@ -115,44 +115,44 @@ extension BTree {
      */
     func insert(_ value: Value, for key: Key) {
         root.insert(value, for: key)
-
+        
         if root.isTooLarge {
             splitRoot()
         }
     }
-
+    
     /**
      *  Splits the root node of the tree.
      */
     private func splitRoot() {
         let middleIndex = root.numberOfKeys / 2
-
+        
         let newRoot = Node<Key, Value>(
-                owner: self,
-                keys: [root.keys[middleIndex]],
-                values: [root.values[middleIndex]],
-                children: [root]
+            owner: self,
+            keys: [root.keys[middleIndex]],
+            values: [root.values[middleIndex]],
+            children: [root]
         )
         root.keys.remove(at: middleIndex)
         root.values.remove(at: middleIndex)
-
+        
         let newRightChild = Node<Key, Value>(
-                owner: self,
-                keys: Array(root.keys[root.keys.indices.suffix(from: middleIndex)]),
-                values: Array(root.values[root.values.indices.suffix(from: middleIndex)])
+            owner: self,
+            keys: Array(root.keys[root.keys.indices.suffix(from: middleIndex)]),
+            values: Array(root.values[root.values.indices.suffix(from: middleIndex)])
         )
         root.keys.removeSubrange(root.keys.indices.suffix(from: middleIndex))
         root.values.removeSubrange(root.values.indices.suffix(from: middleIndex))
-
+        
         if root.children != nil {
             newRightChild.children = Array(
-                    root.children![root.children!.indices.suffix(from: (middleIndex + 1))]
+                root.children![root.children!.indices.suffix(from: (middleIndex + 1))]
             )
             root.children!.removeSubrange(
-                    root.children!.indices.suffix(from: (middleIndex + 1))
+                root.children!.indices.suffix(from: (middleIndex + 1))
             )
         }
-
+        
         newRoot.children!.append(newRightChild)
         root = newRoot
     }
@@ -161,7 +161,7 @@ extension BTree {
 // MARK: - BTree (Deletion) -
 
 extension BTree {
-
+    
     /**
      *  Removes `key` and the value associated with it from the tree.
      *
@@ -172,9 +172,9 @@ extension BTree {
         guard root.numberOfKeys > 0 else {
             return
         }
-
+        
         root.remove(key)
-
+        
         if root.numberOfKeys == 0 && !root.isLeaf {
             root = root.children!.first!
         }
