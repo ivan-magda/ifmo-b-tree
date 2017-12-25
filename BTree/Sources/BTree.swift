@@ -181,6 +181,17 @@ extension BTree {
     }
 }
 
+// MARK: - BTree (Conversion) -
+
+extension BTree {
+    /**
+     *  The keys of the tree in order.
+     */
+    public var inorderArrayFromKeys: [Key] {
+        return root.inorderArrayFromKeys
+    }
+}
+
 // MARK: - BTree (CustomStringConvertible) -
 
 extension BTree: CustomStringConvertible {

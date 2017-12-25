@@ -389,6 +389,31 @@ extension Node {
     }
 }
 
+// MARK: - Node (Conversion) -
+
+extension Node {
+    /**
+     *  Returns an array which contains the keys from the current node
+     *  and its descendants in order.
+     */
+    var inorderArrayFromKeys: [Key] {
+        var array = [Key]()
+
+        for i in 0..<numberOfKeys {
+            if let returnedArray = children?[i].inorderArrayFromKeys {
+                array += returnedArray
+            }
+            array += [keys[i]]
+        }
+
+        if let returnedArray = children?.last?.inorderArrayFromKeys {
+            array += returnedArray
+        }
+
+        return array
+    }
+}
+
 // MARK: - Node (CustomStringConvertible) -
 
 extension Node: CustomStringConvertible {
