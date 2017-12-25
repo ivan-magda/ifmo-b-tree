@@ -27,7 +27,7 @@ private typealias Tree = BTree<Int, Int>
 func demoInsertion() {
     print("Insertion:")
 
-    let bTree = Tree(order: 4)!
+    let bTree = Tree(order: 4)
     let keys = [8, 13, 5, 0, 16, 7, 23, 48, 15]
 
     print("Keys to be inserted: \(keys)\n")
@@ -43,7 +43,7 @@ func demoInsertion() {
 func demoDeletion() {
     print("Deletion:")
 
-    let bTree = Tree(order: 4)!
+    let bTree = Tree(order: 4)
 
     let toInsert = Array(1...10)
     let toDelete = [6, 1, 3]
@@ -72,7 +72,7 @@ func demoDeletion() {
 func traversDemo() {
     print("Travers:")
 
-    let bTree = Tree(order: 4)!
+    let bTree = Tree(order: 4)
 
     for key in 1...20 {
         bTree.insert(key, for: key)

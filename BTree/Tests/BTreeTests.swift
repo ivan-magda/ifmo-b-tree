@@ -32,7 +32,7 @@ class BTreeTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        bTree = Tree(order: BTreeTests.order)!
+        bTree = Tree(order: BTreeTests.order)
     }
 
     // MARK: - Tests on empty tree
@@ -188,7 +188,7 @@ class BTreeTests: XCTestCase {
     }
 
     func testRemoveSomeFrom4ndOrder() {
-        bTree = Tree(order: 4)!
+        bTree = Tree(order: 4)
         bTree.insertKeysUpTo(40)
 
         bTree.remove(6)

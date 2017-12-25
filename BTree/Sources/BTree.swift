@@ -50,11 +50,8 @@ class BTree<Key: Comparable, Value> {
      *  - Parameters:
      *    - order: The order of the tree.
      */
-    public init?(order: Int) {
-        guard order > 2 else {
-            print("Order has to be greater than 2.")
-            return nil
-        }
+    public init(order: Int) {
+        assert(order > 2, "Order has to be greater than 2.")
 
         self.order = order
         self.root = Node<Key, Value>(owner: self)

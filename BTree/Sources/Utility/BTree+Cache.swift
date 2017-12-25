@@ -38,6 +38,6 @@ let cacheSize: Int = {
 extension BTree {
     convenience init() {
         let order = cacheSize / (4 * MemoryLayout<Key>.stride)
-        self.init(order: Swift.max(16, order))!
+        self.init(order: Swift.max(16, order))
     }
 }

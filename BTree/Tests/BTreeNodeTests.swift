@@ -24,7 +24,7 @@ import XCTest
 
 class BTreeNodeTests: XCTestCase {
 
-    let bTree = BTree<Int, Int>(order: 4)!
+    let bTree = BTree<Int, Int>(order: 4)
     var root: Node<Int, Int>!
     var leftChild: Node<Int, Int>!
     var rightChild: Node<Int, Int>!
