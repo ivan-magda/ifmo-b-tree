@@ -193,7 +193,7 @@ class BTreeTests: XCTestCase {
         }
     }
     
-    func testRemoveSomeFrom4ndOrder() {
+    func testRemoveSomeFrom4thOrder() {
         bTree = Tree(order: 4)
         bTree.insertKeysUpTo(40)
         
