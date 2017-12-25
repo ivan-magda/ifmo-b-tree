@@ -13,6 +13,9 @@ B-tree is a self-balancing tree data structure that keeps data sorted and allows
   - `remove(_:)` method removes the given key from the tree. After a key has been deleted,
 every node checks the number of keys in its child. If a child has less nodes than the order of the tree, it calls the `fix(childWithTooFewKeys:atIndex:)` method.
   - `fix(childWithTooFewKeys:atIndex:)` method decides which way to fix the child (by moving a key to it, or by merging it), then calls `move(keyAtIndex:to:from:at:)` or `merge(child:atIndex:to:)` method according to its choice.
+  
+### Benchmarks Results:
+- [Charts](./Resources)
 
 ## Helpful Links:
 - [Wikipedia](https://en.wikipedia.org/wiki/B-tree)
